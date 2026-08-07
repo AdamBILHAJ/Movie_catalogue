@@ -155,7 +155,7 @@ function MovieDetails() {
             <div className="pt-16 md:pt-28 flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
                 
                 {/* Cinematic Poster */}
-                <div className="relative shrink-0 flex-none w-[320px] md:w-[400px] aspect-[2/3] rounded-lg overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.9)] border border-white/5 transition-transform duration-700 hover:scale-[1.02]">
+                <div className="relative shrink-0 flex-none w-[220px] md:w-[280px] lg:w-[320px] aspect-[2/3] rounded-lg overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.9)] border border-white/5 transition-transform duration-700 hover:scale-[1.02]">
                     <img 
                         src={`https://image.tmdb.org/t/p/w500${details.poster_path}`} 
                         className="w-full h-full object-cover" 
@@ -180,7 +180,7 @@ function MovieDetails() {
                         <div className="space-y-4">
     
                             {details.tagline && (
-                                <p className="text-2xl md:text-3xl italic text-slate-400 font-light border-l-4 border-primary/30 pl-8 leading-relaxed max-w-3xl">
+                                <p className="text-2xl md:text-3xl italic text-slate-400 font-light border-l-4 border-primary/30 pl-8 leading-relaxed max-w-3xl break-words">
                                     "{details.tagline}"
                                 </p>
                             )}
@@ -214,7 +214,7 @@ function MovieDetails() {
 
                     <div className="space-y-4">
                       <h3 className="text-xs font-black uppercase tracking-[0.4em] text-white/30">Synopsis</h3>
-                      <p className="text-xl text-slate-300 max-w-3xl leading-relaxed font-light">
+                      <p className="text-xl text-slate-300 max-w-3xl leading-relaxed font-light break-words">
                           {details.overview}
                       </p>
                     </div>
@@ -264,7 +264,7 @@ function MovieDetails() {
                 </div>
 
                 {/* Metadata Grid Compartment */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
                   <div className="bg-white/5 backdrop-blur-3xl rounded-3xl p-10 border border-white/5 space-y-5 transition-colors duration-500 hover:bg-white/[0.08] hover:border-white/10 group">
                     <div className="flex items-center justify-between">
                       <span className="text-[11px] text-white/20 uppercase tracking-[0.4em] font-black group-hover:text-primary transition-colors">Launch</span>
