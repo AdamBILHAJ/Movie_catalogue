@@ -2,17 +2,8 @@ import { useParams } from "react-router-dom";
 // the use params hook will allow us to get the movieId from the url
 import { useEffect, useState } from "react";
 import { getMovieDetails, getMovietrailer } from "../services/api";
-import { 
-  //Star, 
-  //Clock, 
-  Calendar, 
-  DollarSign, 
-  TrendingUp, 
-  Building2, 
-  Play, 
-  Info, 
-  //Globe 
-} from "lucide-react";
+import { Calendar, DollarSign, TrendingUp, Building2, Play, Info } from "lucide-react";
+import "../css/MovieDetails.css";
 
 // Interface provided by user
 interface Genre {
@@ -125,199 +116,181 @@ function MovieDetails() {
     if (!details) return null;
 
     return (
-    <div className="min-h-screen bg-[#050505] text-slate-100 selection:bg-primary selection:text-white pb-32 relative overflow-hidden font-sans ">
-        
-        {/* Immersive Background Atmosphere - Integrated with daisyUI Hero Method */}
-        <div 
-    className="hero absolute inset-0 z-0 opacity-20 select-none pointer-events-none transition-opacity duration-1000"
-    style={{ 
-        backgroundImage: `url(https://image.tmdb.org/t/p/original${details.backdrop_path})`,
-        backgroundPosition: 'center',
-        backgroundSize: 'cover'
-    }}
->
-    {/* 1. Low-opacity overlay to tint the image slightly darker */}
-    <div className="hero-overlay bg-[#050505] bg-opacity-40"></div>
+        <div className="movie-details-container">
+            <div 
+                className="hero absolute inset-0 z-0 opacity-20 select-none pointer-events-none transition-opacity duration-1000"
+                style={{ 
+                    backgroundImage: `url(https://image.tmdb.org/t/p/original${details.backdrop_path})`,
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover'
+                }}
+            >
+                {/* 1. Low-opacity overlay to tint the image slightly darker */}
+                <div className="hero-overlay bg-[#050505] bg-opacity-40"></div>
 
-    {/* 2. Soft Vertical Gradient: Removes the 'via-95%' which was blocking the view */}
-    <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent"></div>
-    
-    {/* 3. Soft Horizontal Gradient: Fades the edges so the poster stands out */}
-    <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-[#050505]"></div>
-        
-
-        {/* Subtle Design Accents */}
-        <div className="absolute top-1/2 -right-10 w-24 h-[50vh] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
-        <div className="fixed bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent pointer-events-none z-50"></div>
-
-        <div className="container mx-auto px-6 md:px-12 lg:px-16 z-10 relative">
-            {/* Hero Section */}
-            <div className="pt-16 md:pt-28 flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+                {/* 2. Soft Vertical Gradient: Removes the 'via-95%' which was blocking the view */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent"></div>
                 
-                {/* Cinematic Poster */}
-                <div className="relative shrink-0 flex-none w-[220px] md:w-[280px] lg:w-[320px] aspect-[2/3] rounded-lg overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.9)] border border-white/5 transition-transform duration-700 hover:scale-[1.02]">
-                    <img 
-                        src={`https://image.tmdb.org/t/p/w500${details.poster_path}`} 
-                        className="w-full h-full object-cover" 
-                        alt={details.title}
-                        referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
-                </div>
+                {/* 3. Soft Horizontal Gradient: Fades the edges so the poster stands out */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-[#050505]"></div>
+                    
 
-                {/* Movie Information Extraction */}
-                <div className="flex-grow space-y-10">
-                    <div className="space-y-6">
-                        <div className="flex flex-wrap items-center gap-4">
-                            <span className="badge badge-outline border-primary/50 text-primary font-mono tracking-tighter uppercase text-[10px] px-4 py-3 rounded-md">
-                                Official Cinematic Entry
-                            </span>
-                            <div className="flex items-center gap-3 text-xs text-white/40 tracking-[0.3em] uppercase font-bold">
-                                {details.genres.slice(0, 3).map(g => g.name).join(' • ')}
+                {/* Subtle Design Accents */}
+                <div className="absolute top-1/2 -right-10 w-24 h-[50vh] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
+                <div className="fixed bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent pointer-events-none z-50"></div>
+            </div>        
+
+            <div className="container mx-auto px-6 md:px-12 lg:px-16 z-10 relative">
+                <div className="movie-details-hero">
+                    
+                    {/* Cinematic Poster */}
+                    <div className="details-poster">
+                        <img 
+                            src={`https://image.tmdb.org/t/p/w500${details.poster_path}`} 
+                            alt={details.title}
+                            referrerPolicy="no-referrer"
+                        />
+                    </div>
+
+                    {/* Movie Information */}
+                    <div className="details-info">
+                        <div className="details-header">
+                            <div className="details-badge-row">
+                                <span className="details-badge">Official Entry</span>
+                                <span className="details-genres">
+                                    {details.genres.map(g => g.name).join(' • ')}
+                                </span>
                             </div>
-                        </div>
-                        
-                        <div className="space-y-4">
-    
+                            
+                            <h1 className="details-title">
+                                {details.title}
+                            </h1>
+
                             {details.tagline && (
-                                <p className="text-2xl md:text-3xl italic text-slate-400 font-light border-l-4 border-primary/30 pl-8 leading-relaxed max-w-3xl break-words">
+                                <p className="details-tagline">
                                     "{details.tagline}"
                                 </p>
                             )}
                         </div>
-                    </div>
 
-                    {/* Integration Metrics Bar */}
-                    <div className="flex flex-wrap gap-12 md:gap-20 items-center py-10 border-y border-white/5">
-                        <div className="flex flex-col gap-2">
-                            <span className="text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black">Archive Score</span>
-                            <div className="flex items-baseline gap-2">
-                                <span className="text-5xl font-black text-yellow-500 tracking-tighter">{details.vote_average.toFixed(1)}</span>
-                                <span className="text-sm text-slate-600 font-bold uppercase tracking-widest">/ 10</span>
+                        {/* Integration Metrics Bar */}
+                        <div className="details-metrics">
+                            <div className="metric-item">
+                                <span className="metric-label">Rating</span>
+                                <span className="metric-value score-highlight">
+                                    {details.vote_average.toFixed(1)}
+                                    <span className="metric-suffix">/ 10</span>
+                                </span>
+                            </div>
+
+                            <div className="metric-item">
+                                <span className="metric-label">Runtime</span>
+                                <span className="metric-value">
+                                    {details.runtime || 0}
+                                    <span className="metric-suffix">Mins</span>
+                                </span>
+                            </div>
+
+                            <div className="metric-item">
+                                <span className="metric-label">Released</span>
+                                <span className="metric-value">
+                                    {new Date(details.release_date).getFullYear()}
+                                </span>
                             </div>
                         </div>
 
-                        <div className="flex flex-col gap-2">
-                            <span className="text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black">Sequence Duration</span>
-                            <span className="text-5xl font-black tracking-tighter text-white">
-                                {details.runtime || 0}<span className="text-xs font-bold text-slate-600 ml-2 uppercase tracking-widest">Minutes</span>
-                            </span>
+                        <div className="details-overview-section">
+                            <h3 className="details-overview-title">Synopsis</h3>
+                            <p className="details-overview-text">
+                                {details.overview}
+                            </p>
                         </div>
 
-                        <div className="flex flex-col gap-2">
-                            <span className="text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black">Release Window</span>
-                            <span className="text-5xl font-black tracking-tighter text-white">
-                                {new Date(details.release_date).getFullYear()}
-                            </span>
-                        </div>
+                        {trailer && (
+                            <button 
+                                onClick={() => setIsPlayerActive(true)}
+                                className="play-trailer-btn"
+                            >
+                                <Play className="w-4 h-4 fill-current" />
+                                Play Trailer
+                            </button>
+                        )}
                     </div>
+                </div>
 
-                    <div className="space-y-4">
-                      <h3 className="text-xs font-black uppercase tracking-[0.4em] text-white/30">Synopsis</h3>
-                      <p className="text-xl text-slate-300 max-w-3xl leading-relaxed font-light break-words">
-                          {details.overview}
-                      </p>
-                    </div>
-
-                    <div className="pt-8">
+                {/* Embedded Trailer Section (Directly under poster and overview) */}
+                {isPlayerActive && trailer && (
+                    <div className="trailer-iframe-wrapper">
+                        <iframe
+                            width="100%"
+                            height="100%"
+                            src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1`}
+                            title="YouTube video player"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        ></iframe>
                         <button 
-                            onClick={() => setIsPlayerActive(true)}
-                            className="btn btn-primary btn-lg rounded-full px-16 gap-4 shadow-[0_20px_50px_rgba(59,130,246,0.3)] border-none text-white font-black uppercase tracking-[0.2em] transform transition-all duration-500 hover:scale-110 active:scale-95 group"
+                            onClick={() => setIsPlayerActive(false)}
+                            className="trailer-close-btn"
                         >
-                            <Play className="w-6 h-6 fill-current transition-transform group-hover:scale-125" />
-                            Play Trailer
+                            ×
                         </button>
                     </div>
+                )}
+
+                {/* Additional Details Grid */}
+                <div className="details-grid">
+                    <div className="details-card">
+                        <div className="details-card-header">
+                            <span>Release Date</span>
+                            <Calendar className="w-4 h-4 text-primary opacity-50" />
+                        </div>
+                        <span className="details-card-value">
+                            {new Date(details.release_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </span>
+                    </div>
+
+                    <div className="details-card">
+                        <div className="details-card-header">
+                            <span>Budget</span>
+                            <DollarSign className="w-4 h-4 text-emerald-500 opacity-50" />
+                        </div>
+                        <span className="details-card-value">
+                            {details.budget > 0 ? `$${details.budget.toLocaleString()}` : "Confidential"}
+                        </span>
+                    </div>
+
+                    <div className="details-card">
+                        <div className="details-card-header">
+                            <span>Revenue</span>
+                            <TrendingUp className="w-4 h-4 text-emerald-500 opacity-50" />
+                        </div>
+                        <span className="details-card-value">
+                            {details.revenue > 0 ? `$${details.revenue.toLocaleString()}` : "Confidential"}
+                        </span>
+                    </div>
+
+                    <div className="details-card">
+                        <div className="details-card-header">
+                            <span>Production</span>
+                            <Building2 className="w-4 h-4 text-primary opacity-50" />
+                        </div>
+                        <span className="details-card-value">
+                            {details.production_companies[0]?.name || "Independent"}
+                        </span>
+                    </div>
                 </div>
+
+                {error && (
+                    <div className="error-banner">
+                        <Info className="w-4 h-4" />
+                        <span>Warning: Internal Exception - {error}</span>
+                    </div>
+                )}
             </div>
-
-            {/* Sub-Archive Compartments */}
-            <div className="mt-32 space-y-32">
-                <div className="space-y-12">
-                    <div className="flex items-center gap-8">
-                        <h2 className="text-5xl font-black uppercase tracking-tighter whitespace-nowrap text-white">Official Media</h2>
-                        <div className="flex-1 h-[1px] bg-gradient-to-r from-primary/40 via-primary/10 to-transparent"></div>
-                    </div>
-                    
-                    <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-black shadow-[0_60px_120px_rgba(0,0,0,0.9)] border border-white/5 transition-all duration-700">
-                        {isPlayerActive && trailer &&(
-                            <div className="absolute inset-0 w-full h-full">
-                                <iframe
-                                    width="100%"
-                                    height="100%"
-                                    src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1`}
-                                    title="YouTube video player"
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                ></iframe>
-                                <button 
-                                    onClick={() => setIsPlayerActive(false)}
-                                    className="absolute top-8 right-8 btn btn-circle btn-sm bg-black/80 border-none text-white hover:bg-primary transition-all duration-300 backdrop-blur-md"
-                                >
-                                    ×
-                                </button>
-                            </div>
-                    
-                   ) }
-                    </div>
-                </div>
-
-                {/* Metadata Grid Compartment */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
-                  <div className="bg-white/5 backdrop-blur-3xl rounded-3xl p-10 border border-white/5 space-y-5 transition-colors duration-500 hover:bg-white/[0.08] hover:border-white/10 group">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[11px] text-white/20 uppercase tracking-[0.4em] font-black group-hover:text-primary transition-colors">Launch</span>
-                      <Calendar className="w-5 h-5 text-primary opacity-30 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                    <span className="text-3xl font-black tracking-tighter text-white block">
-                      {new Date(details.release_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                    </span>
-                  </div>
-
-                  <div className="bg-white/5 backdrop-blur-3xl rounded-3xl p-10 border border-white/5 space-y-5 transition-colors duration-500 hover:bg-white/[0.08] hover:border-white/10 group">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[11px] text-white/20 uppercase tracking-[0.4em] font-black group-hover:text-emerald-500 transition-colors">Resources</span>
-                      <DollarSign className="w-5 h-5 text-emerald-500 opacity-30 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                    <span className="text-3xl font-black tracking-tighter text-emerald-400 block uppercase">
-                      {details.budget > 0 ? `$${details.budget.toLocaleString()}` : "Confidential"}
-                    </span>
-                  </div>
-
-                  <div className="bg-white/5 backdrop-blur-3xl rounded-3xl p-10 border border-white/5 space-y-5 transition-colors duration-500 hover:bg-white/[0.08] hover:border-white/10 group">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[11px] text-white/20 uppercase tracking-[0.4em] font-black group-hover:text-emerald-500 transition-colors">Revenue</span>
-                      <TrendingUp className="w-5 h-5 text-emerald-500 opacity-30 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                    <span className="text-3xl font-black tracking-tighter text-emerald-400 block uppercase">
-                      {details.revenue > 0 ? `$${details.revenue.toLocaleString()}` : "Archive Empty"}
-                    </span>
-                  </div>
-
-                  <div className="bg-white/5 backdrop-blur-3xl rounded-3xl p-10 border border-white/5 space-y-5 transition-colors duration-500 hover:bg-white/[0.08] hover:border-white/10 group">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[11px] text-white/20 uppercase tracking-[0.4em] font-black group-hover:text-primary transition-colors">Network</span>
-                      <Building2 className="w-5 h-5 text-primary opacity-30 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                    <span className="text-3xl font-black tracking-tighter text-white block truncate uppercase">
-                      {details.production_companies[0]?.name || "Independent"}
-                    </span>
-                  </div>
-                </div>
-            </div>
-
-            {/* Inline Error Tracking */}
-            {error && (
-              <div className="mt-20 p-6 rounded-2xl bg-error/10 border border-error/20 flex items-center gap-4 text-error font-mono text-xs uppercase tracking-widest">
-                <Info className="w-4 h-4" />
-                <span>Warning: Internal Exception Detected - {error}</span>
-              </div>
-            )}
         </div>
-    </div>
-    </div>
-);
+    );
 }
 
 export default MovieDetails;
